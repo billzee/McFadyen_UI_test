@@ -1,6 +1,19 @@
 var people = [];
 var people_filtered = [];
 
+var people_section = document.getElementById('people-section');
+var person_section = document.getElementById('person-section');
+
+var person_picture = document.getElementById('person-picture');
+var person_name = document.getElementById('person-name').querySelector('span');
+var person_gender = document.getElementById('person-gender').querySelector('span');
+var person_phone = document.getElementById('person-phone').querySelector('span');
+var person_company = document.getElementById('person-company').querySelector('span');
+var person_address = document.getElementById('person-address').querySelector('span');
+var person_about = document.getElementById('person-about').querySelector('span');
+var person_registered = document.getElementById('person-registered').querySelector('span');
+var person_localization = document.getElementById('person-localization').querySelector('iframe');
+
 var paginate_btn = document.getElementById('paginate');
 
 var form_group = document.getElementsByClassName('form-group')[0];
@@ -22,7 +35,8 @@ var columns =
     {name: 'Email',     prop:  'email'},
     {name: 'Phone',     prop:  'phone'},
     {name: 'Company',   prop:  'company'},
-    {name: 'Balance',   prop:  'balance'}
+    {name: 'Balance',   prop:  'balance'},
+    {name: '',          prop: '_id'}
 ];
 
 (function() {
@@ -80,16 +94,16 @@ function paginate(){
 
     rows.forEach(function(col){
         var tr = document.createElement('tr');
-        var ordered_array = [];
+        var sorted_array = [];
 
         for(var prop in col) {
             for(var i = 0; i < columns.length; i++){
                 if(columns[i].prop == prop)
-                    ordered_array[i] = {key: prop, value: col[prop]};
+                    sorted_array[i] = {key: prop, value: col[prop]};
             }
         }
 
-        ordered_array.forEach(function(item){
+        sorted_array.forEach(function(item){
             var td = document.createElement('td');
 
             switch(item.key) {
@@ -101,6 +115,9 @@ function paginate(){
                     break;
                 case 'picture':
                     td.innerHTML = '<img class="img-responsive" src="' + item.value +'">';
+                    break;
+                case '_id':
+                    td.innerHTML = '<a href="#" onclick="showDetails(\''+ item.value +'\')">Show details</a>';
                     break;
                 default:
                     td.innerText = item.value;
@@ -163,5 +180,31 @@ function hideUI(toggle){
         help_block.classList.add('hidden');
         table.classList.remove('hidden');
         paginate_btn.classList.remove('hidden');
+    }
+}
+
+function showDetails(personId){
+    if(personId){
+        people.find(function(element, index, array){
+            if(element._id == personId){
+                person_picture.innerHTML = '<img class="img-responsive" src="' + element.picture +'">';
+                person_name.innerText = element.name;
+                person_gender.innerText = element.gender;
+                person_phone.innerText = element.phone;
+                person_company.innerText = element.company;
+                person_address.innerText = element.address;
+                person_about.innerText = element.about;
+                person_registered.innerText = element.registered;
+
+                person_localization.src = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyA2Wpd11cckf-eHHYzDERTtxhCWSDUGZeE&q=' + element.latitude + ',' + element.longitude;
+            }
+        });
+
+        people_section.classList.add('hidden');
+        person_section.classList.remove('hidden');
+
+    }else{
+        person_section.classList.add('hidden');
+        people_section.classList.remove('hidden');
     }
 }

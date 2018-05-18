@@ -2,6 +2,11 @@
   padding-top: 50px;
   padding-bottom: 50px;
 }
+
 .mb-20{
   margin-bottom: 20px;
+}
+
+#person-picture img{
+  height: 120px;
 }

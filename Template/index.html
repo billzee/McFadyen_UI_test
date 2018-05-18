@@ -8,32 +8,73 @@
     </head>
     <body>
         <div class="container pt-50">
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-sm-offset-3 mb-20">
-                    <div class="form-group">
-                        <input type="text" class="form-control" onkeyup="searchPeople(this)" placeholder="Search for a name...">
-                        <span class="help-block hidden"></span>
+            <section id="people-section">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-sm-offset-3 mb-20">
+                        <div class="form-group">
+                            <input type="text" class="form-control" onkeyup="searchPeople(this)" placeholder="Search for a name...">
+                            <span class="help-block hidden"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-xs-12">
-                    <table class="table" id="people">
-                        <thead></thead>
-                        <tbody></tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table class="table table-hover" id="people">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-3 col-sm-offset-4">
-                    <button id="paginate" class="btn btn-primary btn-block" type="button" onclick="paginate()">
-                        Show More
-                    </button>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-3 col-sm-offset-4">
+                        <button id="paginate" class="btn btn-primary btn-block" type="button" onclick="paginate()">
+                            Show More
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </section>
+
+            <section id="person-section" class="hidden">
+                <div class="row">
+                    <div class="col-sm-3" id="person-picture">
+                    </div>
+                    <div class="col-sm-9">
+                        <p id="person-name"><strong>Full name: </strong><span></span></p>
+                        <p id="person-gender"><strong>Gender: </strong><span></span></p>
+                        <p id="person-phone"><strong>Phone number: </strong><span></span></p>
+                        <p id="person-company"><strong>Company: </strong><span></span></p>
+                        <p id="person-address"><strong>Address: </strong><span></span></p>
+                    </div>
+                </div>
+                <div class="row mb-20">
+                    <div class="col-xs-12" id="person-about">
+                        <strong>About employee:</strong> <br>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="row mb-20">
+                    <div class="col-xs-12" id="person-registered">
+                        Employee was registered in the system: <span></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12" id="person-localization">
+                        <iframe width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe> 
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 text-right">
+                        <button class="btn btn-default" onclick="showDetails(null)">
+                            Go back
+                        </button>
+                    </div>
+                </div>
+            </section>
 
         </div>
     </body>
