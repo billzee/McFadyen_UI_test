@@ -1,15 +1,17 @@
 var people = [];
 var people_filtered = [];
 
-var table = document.getElementById('people');
-var tbody = table.getElementsByTagName('tbody')[0];
-var thead = table.getElementsByTagName('thead')[0];
+var paginate_btn = document.getElementById('paginate');
 
 var form_group = document.getElementsByClassName('form-group')[0];
 var help_block = form_group.querySelector('.help-block');
 
+var table = document.getElementById('people');
+var tbody = table.getElementsByTagName('tbody')[0];
+var thead = table.getElementsByTagName('thead')[0];
+
 var page_number = 0;
-var page_size = 3;
+var page_size = 10;
 
 var columns = 
 [
@@ -53,14 +55,12 @@ function searchPeople(input){
                 }
             });
 
-            console.log(people_filtered.length);
-
             if(people_filtered.length > 0){
                 displayWarning(false);
                 paginate();
             } else{
                 displayWarning(true);
-                tbody.innerHTML = '';
+                
             }
 
         } else{
@@ -73,34 +73,10 @@ function searchPeople(input){
     }
 }
 
-function displayWarning(toggle){
-    if(toggle){
-        form_group.classList.add('has-warning');
-        help_block.innerText = 'We didn\'t find any person with that name!';
-        help_block.classList.remove('hidden');
-    }else{
-        form_group.classList.remove('has-warning');
-        help_block.classList.add('hidden');
-    }
-}
-
-function displayError(toggle){
-    if(toggle){
-        form_group.classList.add('has-error');
-        help_block.innerText = 'Please inform 3 characters or more.';
-        help_block.classList.remove('hidden');
-    }else{
-        form_group.classList.remove('has-error');
-        help_block.classList.add('hidden');
-    }
-}
-
 function paginate(){
     if(page_number == 0) tbody.innerHTML = '';
-    var rows = people_filtered.length > 0 ? people_filtered : people;
-    rows = rows.slice(page_number * page_size, (page_number + 1) * page_size);
-    
-    console.log(rows, page_number);
+    var total_registers = people_filtered.length > 0 ? people_filtered : people;
+    rows = total_registers.slice(page_number * page_size, (page_number + 1) * page_size);
 
     rows.forEach(function(col){
         var tr = document.createElement('tr');
@@ -137,6 +113,11 @@ function paginate(){
     });
 
     page_number++;
+
+    var table_rows_count = tbody.getElementsByTagName('tr').length;
+
+    if(table_rows_count == total_registers.length)
+        paginate_btn.classList.add('hidden');
 }
 
 function loadDataset(dataset, callback) {   
@@ -151,4 +132,36 @@ function loadDataset(dataset, callback) {
     };
 
     xobj.send(null);
+}
+
+function displayWarning(toggle){
+    hideUI(toggle);
+    if(toggle){
+        form_group.classList.add('has-warning');
+        help_block.innerText = 'We didn\'t find any person with that name!';    
+    }else{
+        form_group.classList.remove('has-warning');
+    }
+}
+
+function displayError(toggle){
+    hideUI(toggle);
+    if(toggle){
+        form_group.classList.add('has-error');
+        help_block.innerText = 'Please inform 3 characters or more.';
+    }else{
+        form_group.classList.remove('has-error');
+    }
+}
+
+function hideUI(toggle){
+    if(toggle){
+        help_block.classList.remove('hidden');
+        table.classList.add('hidden');
+        paginate_btn.classList.add('hidden');
+    }else{
+        help_block.classList.add('hidden');
+        table.classList.remove('hidden');
+        paginate_btn.classList.remove('hidden');
+    }
 }
